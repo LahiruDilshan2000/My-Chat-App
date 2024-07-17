@@ -10,6 +10,7 @@ const MainLayout = () => {
 
     useEffect(() => {
         //check is user authenticated or not
+        console.log(isAuthenticated)
         if (typeof isAuthenticated === 'undefined')
             return;
         const inApp = segment[0]==='(app)';
@@ -21,8 +22,7 @@ const MainLayout = () => {
             router.replace('signin')
         }
     }, [isAuthenticated]);
-
-    return <Slot/>
+    return <Slot />
 }
 
 // export default Slot
