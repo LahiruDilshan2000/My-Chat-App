@@ -6,6 +6,7 @@ import {Octicons} from "@expo/vector-icons";
 import {useRouter} from "expo-router";
 import Loading from "../components/loading";
 import CustomKeyboardView from "../components/custom.keyboard.view";
+import {useAuth} from "../constants/authContext";
 
 
 export default function SignIn() {
@@ -14,6 +15,7 @@ export default function SignIn() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const [loading, setLoading] = useState(false);
+    const {login} = useAuth();
 
     const handleLogin = async () => {
 
@@ -22,6 +24,13 @@ export default function SignIn() {
             return;
         }
         // login
+        setLoading(true);
+        const response = await login(emailRef.current, passwordRef.current);
+        setLoading(false);
+
+        if (!response.success){
+            Alert.alert("Sign In", response.msg);
+        }
     }
     return (
         <CustomKeyboardView>

@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import {onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from 'firebase/auth'
 import {auth, db} from "../firebaseConfig";
 import {doc, getDoc, setDoc} from 'firebase/firestore'
 
@@ -36,16 +36,24 @@ export const AuthContextProvider = ({children}) => {
     const login = async (email, password) => {
         try {
 
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            return {success: true}
         } catch (error) {
-
+            console.log(error)
+            let msg = error.message;
+            if (msg.includes('(auth/invalid-email)')) msg = "Invalid email";
+            if (msg.includes('(auth/weak-password)')) msg = "Password should be at least 6 characters";
+            if (msg.includes('(auth/invalid-credential)')) msg = "Invalid credential";
+            return {success: false, msg};
         }
     }
 
     const logout = async () => {
         try {
-
+            await signOut(auth);
+            return {success: true}
         } catch (error) {
-
+            return {success: false, msg:error.message, error: error}
         }
     }
 
@@ -64,11 +72,14 @@ export const AuthContextProvider = ({children}) => {
             })
             return {success: true, data: response?.user};
         } catch (error) {
+            console.log(error)
             let msg = error.message;
             if (msg.includes('(auth/invalid-email)'))
                 msg = "Invalid email";
             if (msg.includes('(auth/weak-password)'))
-                msg = "Password should be at least 6 characters ";
+                msg = "Password should be at least 6 characters";
+            if (msg.includes('(auth/email-already-in-use)'))
+                msg = "This email already in use";
             return {success: false, msg};
         }
     }
