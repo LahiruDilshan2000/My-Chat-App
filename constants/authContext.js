@@ -14,7 +14,7 @@ export const AuthContextProvider = ({children}) => {
             if (user) {
                 setIsAuthenticated(true);
                 setUser(user);
-                updateUserData(user.uid)
+                updateUserData(user.uid);
             } else {
                 setIsAuthenticated(false);
                 setUser(null);
