@@ -18,7 +18,7 @@ export default function Home() {
     }, []);
 
     const getUsers = async () => {
-
+        user.userId = user?.userId ? user?.userId : user?.uid;
         const q = query(usersRef, where('userId', '!=', user?.userId));
         const querySnapshot = await getDocs(q);
         let data = [];
