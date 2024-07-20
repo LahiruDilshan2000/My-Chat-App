@@ -3,7 +3,7 @@ import {useAuth} from "../../constants/authContext";
 import {useEffect, useState} from "react";
 import {StatusBar} from "expo-status-bar";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import ChatList from "../../components/Chat.list";
+import ChatList from "../../components/chat.list";
 import Loading from "../../components/loading";
 import {getDocs, query, where} from "firebase/firestore";
 import {usersRef} from "../../firebaseConfig";

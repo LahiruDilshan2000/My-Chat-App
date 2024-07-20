@@ -9,7 +9,7 @@ import {Feather} from "@expo/vector-icons";
 import CustomKeyboardView from "../../components/custom.keyboard.view";
 import {useAuth} from "../../constants/authContext";
 import {getRoomId} from "../../util/commen";
-import {collection, doc, setDoc, addDoc, Timestamp} from "firebase/firestore";
+import {collection, doc, setDoc, addDoc, Timestamp, query, orderBy, onSnapshot} from "firebase/firestore";
 import {db} from "../../firebaseConfig";
 
 
@@ -20,9 +20,23 @@ export default function ChatRoom() {
     const router = useRouter();
     const [messages, setMessages] = useState([]);
     const textRef = useRef('');
+    const inputRef =  useRef(null);
 
     useEffect(() => {
         createRoomIfNotExist();
+
+        let roomId = getRoomId(user?.userId, item?.userId);
+        const docRef = doc(db, "rooms", roomId);
+        const messageRef = collection(docRef, "messages");
+        const q = query(messageRef, orderBy('createdAt', 'asc'));
+
+        let unsub = onSnapshot(q, (snapshot) => {
+            let allMessages = snapshot.docs.map( doc => {
+                return doc.data();
+            });
+            setMessages([...allMessages])
+        });
+        return unsub;
     }, []);
 
     const createRoomIfNotExist = async () => {
@@ -40,7 +54,8 @@ export default function ChatRoom() {
             let roomId = getRoomId(user?.userId, item?.userId);
             const docRef = doc(db, 'rooms', roomId);
             const messageRef = collection(docRef, "messages");
-
+            textRef.current = "";
+            if (inputRef) inputRef?.current?.clear();
             const newDoc = await addDoc(messageRef, {
                 userId: user?.userId,
                 text: message,
@@ -62,12 +77,13 @@ export default function ChatRoom() {
                 <View className={'h-3 border-b border-b-neutral-300'}></View>
                 <View className={'flex-1 justify-between bg-neutral-100 overflow-visible'}>
                     <View className={'flex-1'}>
-                        <MessageList messages={messages}/>
+                        <MessageList messages={messages} currentUser={user}/>
                     </View>
                     <View style={{marginBottom: hp(1.7)}} className={'pt-2'}>
                         <View
                             className={'flex-row mx-3 justify-between bg-white border p-2 border-neutral-300 rounded-full pl-5'}>
                             <TextInput
+                                ref={inputRef}
                                 onChangeText={value => textRef.current=value}
                                 style={{fontSize: hp(2)}}
                                 className={'flex-1 mr-2 placeholder:bg-neutral-200'}

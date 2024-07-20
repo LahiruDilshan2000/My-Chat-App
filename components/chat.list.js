@@ -1,5 +1,5 @@
 import {FlatList, View} from "react-native";
-import ChatItem from "./Chat.item";
+import ChatItem from "./chat.item";
 import {useRouter} from "expo-router";
 
 export default function ChatList({users}) {
