@@ -7,8 +7,6 @@ import {useRouter} from "expo-router";
 import Loading from "../components/loading";
 import CustomKeyboardView from "../components/custom.keyboard.view";
 import {useAuth} from "../constants/authContext";
-import {PaytoneOne_400Regular, useFonts} from "@expo-google-fonts/paytone-one";
-import {Poppins_400Regular, Poppins_500Medium} from "@expo-google-fonts/poppins";
 
 
 export default function SignIn() {
@@ -19,11 +17,6 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false);
     const {login} = useAuth();
 
-    const [fontsLoaded, error] = useFonts({
-        PaytoneOne_400Regular,
-        Poppins_400Regular,
-        Poppins_500Medium
-    });
 
     const handleLogin = async () => {
 
@@ -40,9 +33,7 @@ export default function SignIn() {
             Alert.alert("Sign In", response.msg);
         }
     }
-    if (!fontsLoaded){
-        return null;
-    }
+
     return (
         <CustomKeyboardView>
             <View className={'flex-1'}>
@@ -50,9 +41,9 @@ export default function SignIn() {
                 <View style={{paddingTop: hp(10)}} className={"flex gap-12 bg-[#4FADC0]"}>
                     <View className={'px-8'}>
                         <Text style={{fontSize: hp(2.3), fontFamily: 'PaytoneOne_400Regular'}}
-                              className={'text-[#193948]'}>CoolChat App</Text>
+                              className={'text-[#193948]'}>Sign In</Text>
                     </View>
-                    <View className={'bg-white rounded-t-[45px]'}>
+                    <View className={'bg-white rounded-t-[30px]'}>
                         <View className={"items-center"}>
                             <Image style={{height: hp(40)}} resizeMode={'contain'} source={require('../assets/images/3458588_62348.jpg')}/>
                         </View>
@@ -112,7 +103,7 @@ export default function SignIn() {
                             </View>
 
                             <View className={"flex-row justify-center"}>
-                                <Text style={{fontSize: hp(1.8)}} className={"tracking-wide font-semibold text-neutral-400"}>Don't have
+                                <Text style={{fontSize: hp(1.8)}} className={"tracking-wide font-[400] text-neutral-500"}>Don't have
                                     and
                                     account? </Text>
                                 <Pressable onPress={() => router.push('signup')}>

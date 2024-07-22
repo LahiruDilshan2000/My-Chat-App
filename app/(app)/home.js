@@ -28,7 +28,7 @@ export default function Home() {
         setUsers(data);
     }
     return (
-        <View className={'flex-1 bg-white'}>
+        <View className={'flex-1 bg-[#4FADC0]'}>
             <StatusBar style={'light'}/>
             {
                 users.length > 0 ? (

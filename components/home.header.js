@@ -26,7 +26,7 @@ export default function HomeHeader() {
     }
     return (
         <View style={{paddingTop: android ? top + 10 : top}}
-              className={'flex-row justify-between px-5 bg-indigo-400 pb-6 shadow-2xl'}>
+              className={'flex-row justify-between px-5 bg-[#4FADC0] pb-6 shadow-2xl'}>
             <View>
                 <Text style={{fontSize: hp(3)}} className={'font-medium text-white'}>Chats</Text>
             </View>

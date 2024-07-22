@@ -6,22 +6,22 @@ import {Image} from "expo-image";
 import {blurhash} from "../util/commen";
 
 
-export default function ChatRoomHeader({user, router}){
-    return(
+export default function ChatRoomHeader({user, router}) {
+    return (
         <Stack.Screen
             options={{
                 title: '',
                 headerShadowVisible: false,
                 headerLeft: () => {
                     return (
-                        <View className={'flex-row items-center gap-4'}>
+                        <View className={'flex-row items-center gap-4 bg-indigo-400'}>
                             <Pressable onPress={() => router.back()}>
-                                <Entypo name="chevron-left" size={hp(4)} color="#737373" />
+                                <Entypo name="chevron-left" size={hp(4)} color="#737373"/>
                             </Pressable>
                             <View className={'flex-row items-center gap-3'}>
                                 <Image
-                                    source={{ uri: user?.profileUrl }}
-                                    style={{ height: hp(4.5), aspectRatio: 1, borderRadius: 100 }}
+                                    source={{uri: user?.profileUrl}}
+                                    style={{height: hp(4.5), aspectRatio: 1, borderRadius: 100}}
                                     transition={500}
                                     placeholder={blurhash}
                                 />
@@ -33,14 +33,19 @@ export default function ChatRoomHeader({user, router}){
                     );
                 },
                 headerRight: () => {
-                    return(
-                        <View className={'flex-row items-center gap-8'}>
-                            <Ionicons name={"call"} size={hp(3.2)} color={"gray"}/>
-                            <Ionicons name={"videocam"} size={hp(3.2)} color={"gray"}/>
+                    return (
+                        <View className={'flex-row items-center gap-4'}>
+                            <View className={'bg-gray-200 rounded-full w-12 aspect-square justify-center items-center'}>
+                                <Ionicons name={"call"} size={hp(2.5)} color={"white"}/>
+                            </View>
+
+                            <View className={'bg-gray-200 rounded-full w-12 aspect-square justify-center items-center'}>
+                                <Ionicons name={"videocam"} size={hp(2.5)} color={"white"}/>
+                            </View>
                         </View>
                     );
                 }
             }}
-            />
+        />
     )
 }

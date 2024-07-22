@@ -51,7 +51,7 @@ export default function ChatItem({item, index, router, noBorder, currentUser}){
     return(
         <Pressable
             onPress={openChatRoom}
-            className={`flex-row justify-between mx-4 items-center gap-3 mb-4 pb-2 ${!noBorder && 'border-b border-b-neutral-200'}`}>
+            className={`flex-row justify-between mx-4 items-center gap-3 mb-4 pb-3 ${!noBorder && 'border-b-[1px] border-b-neutral-200'}`}>
             {/*<Image
                 source={require('../assets/images/wadawdwd.jpg')}
                 // source={{uri: item?.profileUrl}}
@@ -60,19 +60,19 @@ export default function ChatItem({item, index, router, noBorder, currentUser}){
             />*/}
             <Image
                 source={item?.profileUrl}
-                style={{height: hp(6), width: hp(6), borderRadius: 100}}
+                style={{height: hp(7), width: hp(7), borderRadius: 100}}
                 placeholder={blurhash}
                 transition={500}
             />
             <View className={'flex-1 gap-1'}>
                 <View className={'flex-row justify-between'}>
-                    <Text style={{fontSize: hp(1.8)}} className={'font-semibold text-neutral-800'}>{item?.username}</Text>
-                    <Text style={{fontSize: hp(1.6)}} className={'font-medium text-neutral-500'}>
+                    <Text style={{fontSize: hp(2)}} className={'font-semibold text-neutral-600'}>{item?.username}</Text>
+                    <Text style={{fontSize: hp(1.7)}} className={'font-medium text-neutral-400'}>
                         {renderTime()}
                     </Text>
                 </View>
                 <View>
-                    <Text style={{fontSize: hp(1.6)}} className={'font-medium text-neutral-500'}>
+                    <Text style={{fontSize: hp(1.6)}} className={'font-medium text-neutral-400'}>
                         {renderLastMessage()}
                     </Text>
                 </View>
