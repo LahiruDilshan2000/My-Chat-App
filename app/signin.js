@@ -1,5 +1,5 @@
 import {View, Text, Image, TextInput, TouchableOpacity, Pressable, Alert} from "react-native";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StatusBar} from "expo-status-bar";
 import {Octicons} from "@expo/vector-icons";
@@ -7,6 +7,8 @@ import {useRouter} from "expo-router";
 import Loading from "../components/loading";
 import CustomKeyboardView from "../components/custom.keyboard.view";
 import {useAuth} from "../constants/authContext";
+import {PaytoneOne_400Regular, useFonts} from "@expo-google-fonts/paytone-one";
+import {Poppins_400Regular, Poppins_500Medium} from "@expo-google-fonts/poppins";
 
 
 export default function SignIn() {
@@ -16,6 +18,12 @@ export default function SignIn() {
     const passwordRef = useRef();
     const [loading, setLoading] = useState(false);
     const {login} = useAuth();
+
+    const [fontsLoaded, error] = useFonts({
+        PaytoneOne_400Regular,
+        Poppins_400Regular,
+        Poppins_500Medium
+    });
 
     const handleLogin = async () => {
 
@@ -32,12 +40,93 @@ export default function SignIn() {
             Alert.alert("Sign In", response.msg);
         }
     }
+    if (!fontsLoaded){
+        return null;
+    }
     return (
         <CustomKeyboardView>
-            <View className="flex-1">
+            <View className={'flex-1'}>
+                <StatusBar style="light"/>
+                <View style={{paddingTop: hp(10)}} className={"flex gap-12 bg-[#4FADC0]"}>
+                    <View className={'px-8'}>
+                        <Text style={{fontSize: hp(2.3), fontFamily: 'PaytoneOne_400Regular'}}
+                              className={'text-[#193948]'}>CoolChat App</Text>
+                    </View>
+                    <View className={'bg-white rounded-t-[45px]'}>
+                        <View className={"items-center"}>
+                            <Image style={{height: hp(40)}} resizeMode={'contain'} source={require('../assets/images/3458588_62348.jpg')}/>
+                        </View>
+                        <View>
+                            <Text style={{fontSize: hp(4), fontFamily: 'PaytoneOne_400Regular'}}
+                                  className={'pb-3 text-[#193948] tracking-wider text-center'}>Start a chat now.</Text>
+                        </View>
+                        <View className="gap-4 px-10">
+                            <View style={{height: hp(7)}}
+                                  className={"flex-row gap-4 px-6 py-4 bg-neutral-100 items-center rounded-3xl"}>
+                                <Octicons name={"mail"} size={hp(2.7)} color={"#b0b0b0"}/>
+                                <TextInput
+                                    onChangeText={value => emailRef.current = value}
+                                    style={{fontSize: hp(2)}}
+                                    className={"flex-1 text-neutral-700"}
+                                    placeholder={"Mail"}
+                                    placeholderTextColor={"gray"}
+                                />
+                            </View>
+                            <View className="gap-3">
+                                <View style={{height: hp(7)}}
+                                      className={"flex-row gap-4 px-6 py-4 bg-neutral-100 items-center rounded-3xl"}>
+                                    <Octicons name={"lock"} size={hp(2.7)} color={"#b0b0b0"}/>
+                                    <TextInput
+                                        onChangeText={value => passwordRef.current = value}
+                                        style={{fontSize: hp(2)}}
+                                        className={"flex-1 text-neutral-700"}
+                                        placeholder={"Password"}
+                                        secureTextEntry={true}
+                                        placeholderTextColor={"gray"}
+                                    />
+                                    <Text style={{fontSize: hp(1.8)}} className={"font-bold text-right text-[#E76268]"}>Forgot? </Text>
+                                </View>
+                            </View>
+                            <View className={'pt-2'}>
+                                {
+                                    loading ? (
+                                            <View className={'flex-row justify-center'}>
+                                                <Loading size={hp(7)}/>
+                                            </View>
+                                        ) :
+                                        (
+                                            <TouchableOpacity
+                                                onPress={handleLogin}
+                                                style={{
+                                                    height: hp(7),
+                                                    backgroundColor: "#193948",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    borderRadius: 25,
+                                                }} className={"p-4 items-center justify-center rounded-xl"}>
+                                                <Text style={{fontSize: hp(2.5), fontFamily: 'Poppins_500Medium'}}
+                                                      className={"text-white font-bold tracking-wider"}>Sign in</Text>
+                                            </TouchableOpacity>
+                                        )
+                                }
+                            </View>
+
+                            <View className={"flex-row justify-center"}>
+                                <Text style={{fontSize: hp(1.8)}} className={"tracking-wide font-semibold text-neutral-400"}>Don't have
+                                    and
+                                    account? </Text>
+                                <Pressable onPress={() => router.push('signup')}>
+                                    <Text style={{fontSize: hp(1.8)}} className={"font-semibold text-[#193948]"}>Sign
+                                        Up</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+            {/*<View className="flex-1">
                 <StatusBar style="dark"/>
                 <View style={{paddingTop: hp(10), paddingHorizontal: 15}} className={"flex gap-12"}>
-                    {/*{image}*/}
                     <View className={"items-center"}>
                         <Image style={{height: hp(28)}} resizeMode={'contain'} source={require('../assets/login.png')}/>
                     </View>
@@ -111,7 +200,7 @@ export default function SignIn() {
                         </View>
                     </View>
                 </View>
-            </View>
+            </View>*/}
         </CustomKeyboardView>
     )
 }
