@@ -1,6 +1,6 @@
 import {Pressable, Text, View} from "react-native";
 import {Stack} from "expo-router";
-import {Entypo, Ionicons} from "@expo/vector-icons";
+import {AntDesign, Entypo, Ionicons} from "@expo/vector-icons";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {Image} from "expo-image";
 import {blurhash} from "../util/commen";
@@ -12,20 +12,23 @@ export default function ChatRoomHeader({user, router}) {
             options={{
                 title: '',
                 headerShadowVisible: false,
+                headerStyle: {
+                    backgroundColor: '#4FADC0',
+                },
                 headerLeft: () => {
                     return (
-                        <View className={'flex-row items-center gap-4 bg-indigo-400'}>
-                            <Pressable onPress={() => router.back()}>
-                                <Entypo name="chevron-left" size={hp(4)} color="#737373"/>
+                        <View className={'flex-col items-start gap-2 pt-4 pb-7 pl-4'}>
+                            <Pressable onPress={() => router.back()} className={'pb-4'}>
+                                <Entypo name="chevron-left" size={hp(3.5)} color="#88ccd8"/>
                             </Pressable>
                             <View className={'flex-row items-center gap-3'}>
                                 <Image
                                     source={{uri: user?.profileUrl}}
-                                    style={{height: hp(4.5), aspectRatio: 1, borderRadius: 100}}
+                                    style={{height: hp(4.7), aspectRatio: 1, borderRadius: 100, }}
                                     transition={500}
                                     placeholder={blurhash}
                                 />
-                                <Text style={{fontSize: hp(2.5)}} className={'text-neutral-700 font-medium'}>
+                                <Text style={{fontSize: hp(2.5)}} className={'text-white font-medium'}>
                                     {user?.username}
                                 </Text>
                             </View>
@@ -34,17 +37,22 @@ export default function ChatRoomHeader({user, router}) {
                 },
                 headerRight: () => {
                     return (
-                        <View className={'flex-row items-center gap-4'}>
-                            <View className={'bg-gray-200 rounded-full w-12 aspect-square justify-center items-center'}>
-                                <Ionicons name={"call"} size={hp(2.5)} color={"white"}/>
+                        <View className={'flex-col items-end gap-2 pt-4 pb-8 pr-3'}>
+                            <View className={'pb-4'}>
+                                <AntDesign name={'search1'} size={hp(2.5)} color={'#88ccd8'}/>
                             </View>
+                            <View className={'flex-row items-center gap-3'}>
+                                <View className={'bg-[#88ccd8] rounded-full w-12 aspect-square justify-center items-center'}>
+                                    <Ionicons name={"call"} size={hp(2.5)} color={"white"}/>
+                                </View>
 
-                            <View className={'bg-gray-200 rounded-full w-12 aspect-square justify-center items-center'}>
-                                <Ionicons name={"videocam"} size={hp(2.5)} color={"white"}/>
+                                <View className={'bg-[#88ccd8] rounded-full w-12 aspect-square justify-center items-center'}>
+                                    <Ionicons name={"videocam"} size={hp(2.5)} color={"white"}/>
+                                </View>
                             </View>
                         </View>
                     );
-                }
+                },
             }}
         />
     )

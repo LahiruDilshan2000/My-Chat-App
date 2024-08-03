@@ -5,7 +5,7 @@ import ChatRoomHeader from "../../components/chat.room.header";
 import MessageList from "../../components/message.list";
 import {useEffect, useRef, useState} from "react";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {Feather} from "@expo/vector-icons";
+import {Feather, Ionicons} from "@expo/vector-icons";
 import CustomKeyboardView from "../../components/custom.keyboard.view";
 import {useAuth} from "../../constants/authContext";
 import {getRoomId} from "../../util/commen";
@@ -92,27 +92,26 @@ export default function ChatRoom() {
 
     return (
         <CustomKeyboardView inChat={true}>
-            <View className={'flex-1 bg-white'}>
+            <View className={'flex-1 bg-[#4FADC0]'}>
                 <StatusBar style={'dark'}/>
                 <ChatRoomHeader user={item} router={router}/>
-                <View className={'h-3 border-b border-b-neutral-300'}></View>
-                <View className={'flex-1 justify-between bg-neutral-100 overflow-visible'}>
+                <View className={'flex-1 justify-between bg-white overflow-hidden rounded-t-[30px]'}>
                     <View className={'flex-1'}>
                         <MessageList scrollViewRef={scrollViewRef} messages={messages} currentUser={user}/>
                     </View>
                     <View style={{marginBottom: hp(1.7)}} className={'pt-2'}>
                         <View
-                            className={'flex-row mx-3 justify-between bg-white border p-2 border-neutral-300 rounded-full pl-5'}>
+                            className={'flex-row mx-3 justify-between  border-[1px] p-2 border-neutral-300 rounded-full pl-5'}>
                             <TextInput
                                 ref={inputRef}
                                 onChangeText={value => textRef.current=value}
                                 style={{fontSize: hp(2)}}
                                 className={'flex-1 mr-2 placeholder:bg-neutral-200'}
-                                placeholder={'Type here...'}/>
+                                placeholder={'Type your message...'}/>
                             <Pressable
                                 onPress={handleSendMessage}
-                                className={'bg-indigo-400 p-3 mr-[1px] rounded-full'}>
-                                <Feather name={'send'} size={hp(2.7)} color={'#ffffff'}/>
+                                className={'bg-[#4FADC0] p-4 mr-[1px]  rounded-full'}>
+                                <Ionicons name="send-sharp" size={19} color={'#ffffff'} />
                             </Pressable>
                         </View>
                     </View>

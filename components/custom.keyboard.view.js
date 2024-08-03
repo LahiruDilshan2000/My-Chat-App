@@ -7,13 +7,13 @@ export default function CustomKeyboardView({children, inChat}) {
     let scrollViewConfig = {};
 
     if (inChat){
-        keyConfig = {keyboardVerticalOffset: 90}
+        keyConfig = {keyboardVerticalOffset: 165}
         scrollViewConfig = {contentContainerStyle: {flex: 1}}
     }
     return (
         <KeyboardAvoidingView
             behavior={android ? 'height' : 'padding'}
-            keyboardVerticalOffset={keyConfig.keyboardVerticalOffset || 90}
+            keyboardVerticalOffset={keyConfig.keyboardVerticalOffset}
             style={{flex: 1}}>
             <ScrollView
                 style={{flex: 1}}
